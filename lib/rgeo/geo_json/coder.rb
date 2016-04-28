@@ -88,7 +88,7 @@ module RGeo
       # If an error occurs, nil is returned.
 
       def decode(input)
-        if input.is_a?(IO)
+        if input.respond_to?(:read)
           input = input.read rescue nil
         end
         if input.is_a?(String)

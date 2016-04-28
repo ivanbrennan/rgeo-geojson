@@ -29,6 +29,17 @@ class BasicTest < Minitest::Test # :nodoc:
     assert(RGeo::GeoJSON.decode(json, geo_factory: @geo_factory).eql?(object))
   end
 
+  def test_io
+    object = @geo_factory.point(10, 20)
+    json = {
+      "type" => "Point",
+      "coordinates" => [10.0, 20.0],
+    }
+    io = StringIO.new('{"type": "Point", "coordinates": [10.0, 20.0]}')
+    assert_equal(json, RGeo::GeoJSON.encode(object))
+    assert(RGeo::GeoJSON.decode(io, json_parser: :json, geo_factory: @geo_factory).eql?(object))
+  end
+
   def test_point_z
     object = @geo_factory_z.point(10, 20, -1)
     json = {
